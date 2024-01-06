@@ -1,4 +1,7 @@
 import { Icon } from "..";
+import { useState,useEffect } from "react"; 
+import { useSprings,animated } from "@react-spring/web";
+import { useGesture } from "react-use-gesture";
 
 export const Carousel = ({
       data,
@@ -7,15 +10,82 @@ export const Carousel = ({
       dots=true,
       counting=true
 }) =>{
-      const Anim = ({item}) =>{
+
+      const [count,setCount] = useState(0);
+      const [move,setMove] = useState(0);
+      const [springs,api] = useSprings(data.length,()=>({
+            x : "0"
+      }))
+
+      useEffect(()=>{
+           const timer = setTimeout(next,5000)
+            api.start({
+                  x : -move+"%"
+            });
+             return() =>{ //Many time are exicute  effect code are run then this syntax are using that name is cleaner function 
+                  clearTimeout(timer);
+             }
+      },[move])
+
+      const prev = ()=>{
+            if((count+1) > 1)
+            {
+                  
+                setCount(count-1);
+                setMove(move-100);
+            }
+            else
+            {
+                  setCount(data.length-1);
+                  setMove(100*[(data.length-1)]);
+            }
+      }
+
+      const next = () =>{
+            if((count+1) < data.length)
+            {
+                  
+                setCount(count+1);
+                setMove(move+100);
+            }
+            else
+            {
+                  setCount(0);
+                  setMove(0);
+            }
+      }
+
+      const onDragEnd = (e) =>{
+           const left = e.direction[0];
+           if(left > 0)
+           {
+              prev();
+           }
+           else
+           {
+              next();
+           }
+      }
+
+      const bind = useGesture({
+            onDragEnd : onDragEnd
+      });
+
+      const dotsControl = (index) =>{
+           setCount(index);
+           setMove(100*index);
+      }
+
+      const Anim = ({styles,index}) =>{
             const a = (
                   <>
-                      <div style={{
+                      <animated.div {...bind()} style={{
                         width : "100%",
                         height : height,
-                        background : `url(${item.image})`,
-                        backgroundSize : "cover"
-                      }}></div>
+                        background : `url(${data[index].image})`,
+                        backgroundSize : "cover",
+                        ...styles
+                      }}></animated.div>
                   </>
             );
             return a;
@@ -27,8 +97,8 @@ export const Carousel = ({
                   width : `${100*data.length}%`
             }}>
                   {
-                        data.map((item,index)=>{
-                              return <Anim key={index} item={item} />
+                        springs.map((styles,index)=>{
+                              return <Anim key={index} index={index} styles={styles} />
                         })
                   }
             </div>
@@ -39,10 +109,10 @@ export const Carousel = ({
             h-full flex flex-col justify-between"
             >
                   {
-                        counting ?<label>1/3</label> : <label></label>
+                        counting ?<label>{count+1}/{data.length}</label> : <label></label>
                   }
                  {
-                    arrow ?<button>
+                    arrow ?<button onClick={prev}>
                    <Icon className="text-white">arrow_back_ios</Icon>
              </button> : null
                  }
@@ -55,7 +125,7 @@ export const Carousel = ({
             >
                   <label></label>
                     {
-                        arrow ?  <button>
+                        arrow ?  <button onClick={next}>
                         <Icon className="text-white">arrow_forward_ios</Icon>
                   </button> : null
                     }
@@ -73,10 +143,12 @@ export const Carousel = ({
                               data.map((item,index)=>{
                                     return (
                                           <>
-                                             <button style={{
+                                             <button 
+                                             onClick={()=>dotsControl(index)}
+                                             style={{
                                                 width : "50px",
                                                 height : "5px",
-                                                background : "rgba(255,255,255,0.3)"
+                                                background : count === index ? "white" : "rgba(255,255,255,0.3)"
                                              }}></button>
                                           </>
                                     )

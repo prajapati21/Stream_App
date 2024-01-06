@@ -1,6 +1,7 @@
 import Button from "./Button/Button";
 import Card from "./Card/Card";
 import Navbar from "./Navbar/Navbar";
+import Footer from "./Footer/Footer";
 import { Fade,Zoom,Expand,Flip } from "./Effect/Effect";
 import { PatterOne,PatterTwo } from "./Patterns/Patterns";
 import IconButton from "./Icon-Button/Icon-Button";
@@ -12,6 +13,7 @@ export {
     Button,
     Card,
     Navbar,
+    Footer,
     Fade,
     Zoom,
     Expand,
@@ -22,5 +24,5 @@ export {
     IconButton,
     FormDesign,
     Input,
-    Carousel
+    Carousel,
 }

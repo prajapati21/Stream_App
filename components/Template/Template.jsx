@@ -4,7 +4,7 @@ import {
       Footer
  } from "../../Tailwind";
  import Logo from "../Logo/Logo";
-const Template = () =>{
+const Template = ({children}) =>{
      // conts
      const menus = {
       brand : <Logo/>,
@@ -58,6 +58,9 @@ const Template = () =>{
                   toolbar={toolbars}
                   variant="three"
                   />
+                  <div>
+                        {children}
+                  </div>
                   <Footer />
             </>
       );

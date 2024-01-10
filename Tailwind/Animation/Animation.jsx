@@ -1,4 +1,4 @@
-import { Icon } from "..";
+import { Button, Icon } from "..";
 import { useState,useEffect } from "react"; 
 import { useSprings,animated } from "@react-spring/web";
 import { useGesture } from "react-use-gesture";
@@ -175,4 +175,70 @@ export const Carousel = ({
       </>
     );
     return design;
+} 
+
+export const Slider = ({
+      data,
+      vertical=false
+}) =>{
+      const [springs,api] = useSprings(data.length,()=>({
+            x : "0"
+      }));
+      
+      const Anim = ({styles,index})=>{
+            const anim = (
+                  <>
+                    <animated.div style={{
+                        ...styles,
+                        width :  vertical ? "100%" :"25%",
+                        height : "181px",
+                        background : `url(${data[index].thumbnail})`,
+                        backgroundSize : "cover"
+                    }}>
+                        <div className={`h-full ${Style["caption-bg"]} 
+                        flex items-center`}>
+                              <div className="px-4 text-white">
+                                    <h1 className="text-xl">
+                                          {data[index].title}
+                                    </h1>
+                                    <p>
+                                          {data[index].duration}
+                                    </p>
+                                    <Button 
+                                    theme="error" 
+                                    className="flex items-center gap-2 text-xs px-3 mt-3"
+                                    >
+                                          <Icon>play_circle</Icon>
+                                          PLAY NOW</Button>
+                              </div>
+
+
+                        </div>
+                    </animated.div>
+                  </>
+            );
+            return anim;
+      }
+
+       const design = (
+            <>
+              <div className="overflow-hidden">
+                  <div className={`flex gap-4 
+                  ${vertical ? "flex-col" : "flex-row"}`} style={{
+                        width : vertical ? "100%" : (25*data.length)+"%"
+                  }}>
+                        {
+                              springs.map((styles,index)=>{
+                                    return <Anim 
+                                    key={index}
+                                    styles={styles}
+                                    index={index}
+                                    />
+                              })
+                        }
+                  </div>
+              </div>
+            </>
+      );
+      return design;
 } 

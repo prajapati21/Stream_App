@@ -8,7 +8,7 @@ import IconButton from "./Icon-Button/Icon-Button";
 import Icon from "./Icon/Icon";
 import FormDesign from "./Form/Form";
 import { Input } from "./Form/Fields";
-import { Carousel } from "./Animation/Animation";
+import { Carousel,Slider } from "./Animation/Animation";
 export {
     Button,
     Card,
@@ -25,4 +25,5 @@ export {
     FormDesign,
     Input,
     Carousel,
+    Slider
 }

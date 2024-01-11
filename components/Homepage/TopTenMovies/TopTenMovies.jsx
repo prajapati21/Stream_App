@@ -27,7 +27,7 @@ const TopTenMovies = () =>{
                   duration : "02:05:40"
             },
             {
-                  thumbnail : "movie-xy.png",
+                  thumbnail : "movie-xyz.png",
                   title : "Jai Shree Ram",
                   duration : "02:05:40"  
             },
@@ -42,7 +42,7 @@ const TopTenMovies = () =>{
                   duration : "02:05:40"
             },
             {
-                  thumbnail : "movie-xy.png",
+                  thumbnail : "movie-xyz.png",
                   title : "Jai Shree Ram",
                   duration : "02:05:40"  
             }
@@ -60,7 +60,9 @@ const TopTenMovies = () =>{
                               <h1 className="text-white mb-4 text-3xl"> 
                                     Top 10 Movies
                                     </h1>
-                                    <div style={{
+                                    <div 
+                                    className="relative"
+                                    style={{
                                           width : 330,
                                           height : 516
                                     }}>

@@ -1,8 +1,9 @@
 import { Button, Icon } from "..";
 import { useState,useEffect } from "react"; 
 import { useSprings,animated } from "@react-spring/web";
-import { useGesture } from "react-use-gesture";
+import { useGesture,useDrag } from "react-use-gesture";
 import Style from"./Animation.module.css";
+import useMeasure from "react-use-measure";
 
 export const Carousel = ({
       data,
@@ -182,13 +183,80 @@ export const Slider = ({
       vertical=false
 }) =>{
       const [springs,api] = useSprings(data.length,()=>({
-            x : "0"
+            x : 0,
+            y : 0
       }));
+
+      const [count,setCount] = useState(0);
+      const [move,setMove] = useState(0);
+      const [image,imageBound] = useMeasure();
+      const [main,mainBound] = useMeasure();
+
+      const handleDrag = ({offset}) =>{
+            
+            console.log(offset);
+            api.start({
+                  x : vertical ? null : offset[0],
+                  y : vertical ? offset[1] : null
+
+            })
+      }
+
+      const bind = useDrag(handleDrag,{
+            bounds : {
+                  left : -((imageBound.width*data.length)-(mainBound.width-(imageBound.width/2))),
+                  right : 0,
+                  top : -((imageBound.height*data.length)-(516-imageBound.height)),
+                  bottom : 0
+            }
+      })
+
+      const next = () =>{
+            if(count < data.length-4)
+            {
+                  setCount(count+1);
+                  vertical ?
+                  setMove(move+imageBound.height)
+                  :
+                  setMove(move+imageBound.width); 
+            }
+            else{
+                  return null
+            }
+      }
+
+      const prev = () =>{
+            if(count > 0)
+            {
+                  
+                  setCount(count-1)
+                  vertical ?
+                  setMove(move-imageBound.height)
+                  :
+                  setMove(move-imageBound.width);
+                  
+            }
+            else{
+                  return null
+            }
+      }
+
+
+      useEffect(()=>{
+            api.start({
+                  x : vertical ? null : -move,
+                  y : vertical ? -move : null
+            })
+      },[move])
       
       const Anim = ({styles,index})=>{
             const anim = (
                   <>
-                    <animated.div style={{
+                    <animated.div 
+                    {...bind()}
+                    ref={image} 
+                    className={Style["no-select"]}
+                    style={{
                         ...styles,
                         width :  vertical ? "100%" :"25%",
                         height : "181px",
@@ -222,7 +290,10 @@ export const Slider = ({
 
        const design = (
             <>
-              <div className="overflow-hidden">
+              <div 
+              ref={main}
+              className={`overflow-hidden 
+              ${vertical ? null : "relative"}`}>
                   <div className={`flex gap-4 
                   ${vertical ? "flex-col" : "flex-row"}`} style={{
                         width : vertical ? "100%" : (25*data.length)+"%"
@@ -237,6 +308,35 @@ export const Slider = ({
                               })
                         }
                   </div>
+
+                  <div className={`flex absolute ${vertical ? "w-full justify-center top-0 left-0" : "h-full items-center top-0 left-0"}`}
+                   >
+                        <button 
+                        onClick={prev}
+                        style={{
+                              background : "rgba(0,0,0,0.8)"
+                        }}
+                        className={`text-white ${vertical ? "px-4 pt-2" : "py-3 px-2"}`}>
+                              <Icon>
+                                    {vertical ? "arrow_upward" : "arrow_back_ios"}
+                              </Icon>
+                        </button>
+                  </div>
+
+                  <div className={`flex absolute ${vertical ? "w-full justify-center bottom-0 left-0" : "h-full items-center top-0 right-0"}`}
+                   >
+                        <button 
+                        onClick={next}
+                        style={{
+                              background : "rgba(0,0,0,0.8)"
+                        }}
+                        className={`text-white ${vertical ? "px-4 pt-2" : "py-3 px-2"}`}>
+                              <Icon>
+                                    {vertical ? "arrow_downward" : "arrow_forward_ios"}
+                              </Icon>
+                        </button>
+                  </div>
+
               </div>
             </>
       );

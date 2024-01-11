@@ -27,7 +27,7 @@ const UpcomingMovies = () =>{
                   duration : "02:05:40"
             },
             {
-                  thumbnail : "movie-xy.png",
+                  thumbnail : "movie-xyz.png",
                   title : "Jai Shree Ram",
                   duration : "02:05:40"  
             },
@@ -42,7 +42,7 @@ const UpcomingMovies = () =>{
                   duration : "02:05:40"
             },
             {
-                  thumbnail : "movie-xy.png",
+                  thumbnail : "movie-xyz.png",
                   title : "Jai Shree Ram",
                   duration : "02:05:40"  
             }

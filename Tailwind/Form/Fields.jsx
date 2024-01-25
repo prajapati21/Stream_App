@@ -14,7 +14,6 @@ export const Input = ({name,
             type={type} 
             as={textarea ? "textarea" : null}
             {...rest}
-            className="border p-2 rounded-sm"
             />
             <ErrorMessage 
             name={name} 

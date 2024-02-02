@@ -3,9 +3,15 @@ import {
       Input
  } from "../../Tailwind";
 const ContactForm = () =>{
+      const fields =[
+            "name",
+            "email",
+            "mobile",
+            "message"
+      ]
       const design = (
             <>
-              <FormDesign>
+              <FormDesign fields={fields}>
                   <div className="flex mb-3 flex-col gap-3">
                   <Input 
                   name="name"

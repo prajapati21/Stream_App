@@ -19,7 +19,7 @@ const AdminPanel = ({children}) =>{
             }
             else{
                   return(
-                        setSidebar("absolute sm:static top-0 left-0 w-6/12 min-h-screen sm:w-0"),
+                        setSidebar("absolute sm:static top-0 left-0 w-8/12 min-h-screen sm:w-0"),
                         setSection("w-full")
                   )
 

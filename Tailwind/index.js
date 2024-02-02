@@ -7,7 +7,10 @@ import { PatterOne,PatterTwo } from "./Patterns/Patterns";
 import IconButton from "./Icon-Button/Icon-Button";
 import Icon from "./Icon/Icon";
 import FormDesign from "./Form/Form";
-import { Input } from "./Form/Fields";
+import { 
+    Input,
+    Select 
+} from "./Form/Fields";
 import { Carousel,Slider } from "./Animation/Animation";
 import Dialog from "./Dialog/Dialog";
 export {
@@ -25,6 +28,7 @@ export {
     IconButton,
     FormDesign,
     Input,
+    Select,
     Carousel,
     Slider,
     Dialog

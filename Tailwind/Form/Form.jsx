@@ -4,13 +4,13 @@ import {
     Form
 } from "formik";
 import * as yup from "yup";
-import { Button } from "..";
-const FormDesign = ({
-    children, 
-    className="",
-    fields,
-    ...rest
-}) =>{
+import { 
+    Button,
+    Input,
+    UploadInput,
+    Select
+} from "..";
+const FormDesign = ({fields,grid=1,gap=4}) =>{
     const schema = {
         fullname : yup.string()
         .required("This Field Is Required !"),
@@ -41,32 +41,39 @@ const FormDesign = ({
         .required("This Field Is Required !"),
     }
     const defaultValues = {};
-    const validation={}
+    const validation={};
 
-    fields.map((item,index)=>{
-        return (
-            defaultValues[item] = "",
-            validation[item] =""
-        )
-    });
+    const Fields = () =>{
+        const allFields = fields.map((item,index)=>{
+            const {component,props} = item;
+            switch(component)
+            {
+                case "input" : return <Input key={index} {...props} />
+                case "upload" : return <UploadInput key={index} {...props} />
+                case "select" : return <Select key={index} {...props} />
+                default :return null;
+            }
+        });
+        return allFields;
+    }
+
+   
     const design = (
         <>
-            <Formik 
-            initialValues={defaultValues}
-            validationSchema={yup.object(validation)}
-            {...rest}
-            >
+            <Formik>
                 {
                     (formik)=>{
                         return (
                             <>
-                                <Form className={className}>
-                                {children}
-                                <Button 
-                                theme="error"
-                                >
-                                    Submit
-                                </Button>
+                                <Form className={`grid gap-${gap}`}>
+                                    <div className={`grid grid-cols-${grid} gap-${gap}`}>
+                                      <Fields />
+                                    </div>
+                                        <Button 
+                                        theme="error"
+                                        >
+                                            Submit
+                                        </Button>
                                 </Form>
                             </>
                         )

@@ -9,7 +9,8 @@ import Icon from "./Icon/Icon";
 import FormDesign from "./Form/Form";
 import { 
     Input,
-    Select 
+    Select,
+    UploadInput
 } from "./Form/Fields";
 import { Carousel,Slider } from "./Animation/Animation";
 import Dialog from "./Dialog/Dialog";
@@ -29,6 +30,7 @@ export {
     FormDesign,
     Input,
     Select,
+    UploadInput,
     Carousel,
     Slider,
     Dialog

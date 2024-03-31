@@ -28,7 +28,8 @@ const Movies = () => {
       props : {
         name : "title",
         placeholder : "Title",
-        className: "bg-gray-100 rounded-sm border-0 p-3"
+        className: "bg-gray-100 rounded-sm border-0 p-3 w-full",
+        width : "full"
       }
     },
     {
@@ -38,6 +39,7 @@ const Movies = () => {
         placeholder : "Video Description",
         textarea : true,
         className: "bg-gray-100 rounded-sm border-0 p-3",
+        width : "full"
       }
     },
     {
@@ -61,7 +63,8 @@ const Movies = () => {
       props : {
         name : "thumbnail",
         className : "bg-gray-100 rounded-sm border-0 p-3",
-        label : "Thumbnail"
+        label : "Thumbnail",
+        accept : "image/*",
       }
     },
     {
@@ -69,7 +72,9 @@ const Movies = () => {
       props : {
         name : "video",
         className : "bg-gray-100 rounded-sm border-0 p-3",
-        label : "Video Files"
+        label : "Video Files",
+        accept : ".mp4",
+        multiple : true
       }
     },
     {
@@ -77,7 +82,8 @@ const Movies = () => {
       props : {
         name : "category",
         className : "bg-gray-100 rounded-sm border-0 p-3",
-        data : options
+        data : options,
+        width : "full"
       }
     },
     {
@@ -87,10 +93,15 @@ const Movies = () => {
         placeholder : "Keywords",
         textarea : true,
         className: "bg-gray-100 rounded-sm border-0 p-3",
+        width : "full"
       }
     }
     
   ]
+
+  const onSubmit = (values) => {
+     console.log(values)
+  }
 
   const MoviesForm = () => {
     const form = (
@@ -99,9 +110,9 @@ const Movies = () => {
         New Video
         </h1>
       <FormDesign 
+      onSubmit={onSubmit}
        fields={fields}
-       grid={1}
-       gap={5}
+       grid={2}
         />
       </>
     );

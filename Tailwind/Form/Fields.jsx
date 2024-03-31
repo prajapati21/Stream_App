@@ -11,7 +11,7 @@ export const Input = ({
 }) =>{
     const design = (
         <>
-           <div className="flex flex-col">
+           <div className={`flex flex-col col-span-${rest.width}`}>
            {
                  label ? <label 
                  className="text-sm font-bold text-left mb-2">{label}</label> 
@@ -26,7 +26,7 @@ export const Input = ({
             <ErrorMessage 
             name={name} 
             component="p"
-            className="text-red-500 text-sm font-bold p-0 m-0"
+            className="text-red-500 text-left text-sm font-bold p-0 m-0"
             />
            </div>
         </>
@@ -34,10 +34,21 @@ export const Input = ({
     return design;
 }
 
-export const Select = ({name,data,...rest}) =>{
+export const Select = ({
+    name,
+    data,
+    label=null,
+    ...rest
+}) =>{
     const design = (
         <>
-                <Field
+            <div className={`flex flex-col col-span-${rest.width}`}>
+                {
+                    label ? <label 
+                    className="text-sm font-bold text-left mb-2">{label}</label> 
+                    : null
+                }
+            <Field
                 name={name}
                 as="select"
                 {...rest}
@@ -55,14 +66,25 @@ export const Select = ({name,data,...rest}) =>{
           <ErrorMessage 
           name={name}
           component="p"   
-          className="text-red-500 text-sm font-bold p-0 m-0"       
+          className="text-red-500 text-left text-sm font-bold p-0 m-0"       
           />
+            </div>
         </>
     );
     return design;
 }
 
-export const UploadInput = ({label=null,...rest}) =>{
+export const UploadInput = ({
+    label=null,
+    formik,
+    ...rest
+}) =>{
+    const handleFile = (e) => {
+        let name = e.target.name;
+        let multiple = e.target.multiple;
+        let files = multiple ? e.target.files : e.target.files[0];
+        formik.setFieldValue(name,files);
+    }
     const design = (
         <>
           <div className="flex flex-col">
@@ -71,12 +93,15 @@ export const UploadInput = ({label=null,...rest}) =>{
            <label className="text-sm font-bold text-left mb-2">{label}</label> 
            : null
            }
-              <Field type="file" {...rest} />  
+              <input
+              onChange = {handleFile}
+              type="file" 
+              {...rest} />  
               <ErrorMessage 
                 name={rest.name}
                 component="p"   
-                className="text-red-500 text-sm font-bold p-0 m-0"       
-            />
+                className="text-red-500 text-left text-sm font-bold p-0 m-0"       
+             />
           </div>
         </>
     );return design

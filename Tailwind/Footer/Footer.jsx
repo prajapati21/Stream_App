@@ -8,7 +8,7 @@ const Footer = () =>{
                  <div className="bg-slate-900 p-16 flex justify-between flex-col sm:flex-row gap-10 sm:gap-0"
                   >
                         <div className="mx-auto">
-                         <Logo/>
+                         <Logo className="text-white"/>
                          <p className="text-gray-300 my-5">Lorem, ipsum dolor sit amet 
                               consectetur adipisicing elit.<br/> 
                               Veritatis, cum. Dolorum, assumenda? 

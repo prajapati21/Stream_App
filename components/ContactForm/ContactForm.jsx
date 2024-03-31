@@ -4,35 +4,52 @@ import {
  } from "../../Tailwind";
 const ContactForm = () =>{
       const fields =[
-            "name",
-            "email",
-            "mobile",
-            "message"
+            {
+                  component : "input",
+                  props : {
+                    name : "name",
+                    placeholder : "name",
+                    className: "bg-gray-100 rounded-sm border-0 p-3 w-full",
+                    width : "full"
+                  }
+                },
+            {
+                  component : "input",
+                  props : {
+                    name : "email",
+                    placeholder : "Email",
+                    className: "bg-gray-100 rounded-sm border-0 p-3 w-full",
+                    width : "full",
+                    type : "email"
+                  }
+                },
+            {
+                  component : "input",
+                  props : {
+                    name : "mobile",
+                    placeholder : "Mobile",
+                    className: "bg-gray-100 rounded-sm border-0 p-3 w-full",
+                    width : "full",
+                    type : "number"
+                  }
+                },
+            {
+                  component : "input",
+                  props : {
+                    name : "message",
+                    placeholder : "Message",
+                    className: "bg-gray-100 rounded-sm border-0 p-3 w-full",
+                    width : "full",
+                    type : "number",
+                    textarea : true
+                  }
+                },
       ]
       const design = (
             <>
-              <FormDesign fields={fields}>
-                  <div className="flex mb-3 flex-col gap-3">
-                  <Input 
-                  name="name"
-                  placeholder="Name"
-                  />
-                  <Input 
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  />
-                  <Input 
-                  name="mobile"
-                  placeholder="number"
-                  />
-                  <Input 
-                  name="Text"
-                  placeholder="Message"
-                  textarea
-                  />
-                  </div>
-              </FormDesign>
+              <FormDesign 
+              fields={fields}
+              />
             </>
       );
       return design;

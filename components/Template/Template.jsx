@@ -32,17 +32,30 @@ const Template = ({children}) =>{
 
       ]
      }
+
+     const dMenu = [
+      {
+            label : "register",
+             href : "/register"
+      },
+      {
+            label : "login",
+             href : "/login"
+      }
+     ]
      const toolbars =
      [
             {
                   label : <IconButton 
-                  theme ="error"
+                  theme ="primary"
                   size="sm"
                   className="bg-inherit"
                   >search</IconButton>
             },
             {
                   label : <IconButton 
+                  dropdown
+                  dropdownMenu={dMenu}
                   theme ="error"
                   size="sm"
                   >person</IconButton>

@@ -1,0 +1,11 @@
+Api folder ka ander ko v folder create karna hai to folder ka ander route.js file bana hai to oo 
+direct access ho jayga
+  any time jab post man sa data put karn ho body ha help sa to hamasa json ko v click karna 
+
+  or const data = await request.json();
+
+  console.log(request.cookies.get("token")?.value);  last mai ?.value lagna sa agar cookies delete ho gya to v error nahi aaya gya
+
+
+  npm i aws-sdk --force
+

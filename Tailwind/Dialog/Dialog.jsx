@@ -9,6 +9,7 @@ const Dialog = ({title="",children}) =>{
          <SweetAlert
          title={title}
          show={DialogReducer.open}
+         showConfirm={false}
          onConfirm={()=>{}}
          >
             <Icon className="absolute top-3 right-3" 

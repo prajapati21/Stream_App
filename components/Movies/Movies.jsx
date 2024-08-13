@@ -3,6 +3,7 @@ import {
   Dialog, 
   FormDesign, 
 } from "../../Tailwind";
+import useS3 from "../../hooks/use.s3";
 
 const Movies = () => {
 
@@ -73,8 +74,7 @@ const Movies = () => {
         name : "video",
         className : "bg-gray-100 rounded-sm border-0 p-3",
         label : "Video Files",
-        accept : ".mp4",
-        multiple : true
+        accept : ".mp4"
       }
     },
     {
@@ -99,9 +99,38 @@ const Movies = () => {
     
   ]
 
-  const onSubmit = (values) => {
-     console.log(values)
+  const onSubmit = async (values) => {
+    const fileProps = [
+      {
+        name : "thumbnail",
+        key : "demo/thumb.png"
+      },
+      {
+        name : "video",
+        key : "demo/video.mp4"
+      }
+    ];
+    for(let data of fileProps)
+    {
+      const upload = useS3(values[data.name],data.key);
+      const uploading = await upload();
+        uploading.on('httpUploadProgress',(e)=>{
+          let loaded = e.loaded;
+          let total = e.total;
+        let perc = Math.floor((loaded*100)/total);
+        console.log(perc+"%");
+        });
+        try {
+          const file = await uploading.promise();
+          console.log(file);
+        }
+        catch(error)
+        {
+          console.log(error);
+        }
+    }
   }
+ 
 
   const MoviesForm = () => {
     const form = (

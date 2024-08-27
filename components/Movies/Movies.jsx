@@ -5,7 +5,23 @@ import {
 } from "../../Tailwind";
 import useS3 from "../../hooks/use.s3";
 
+import {create} from "./Movies.action";
+import { useDispatch,useSelector } from "react-redux";
+import { useEffect } from "react";
+
 const Movies = () => {
+
+  const dispatch = useDispatch();
+  const MoviesReducer = useSelector(response=>response.MoviesReducer);
+    
+  useEffect(()=>{
+    if(MoviesReducer.success)
+    {
+      dispatch({
+        types : "CLOSE_DIALOG"
+      })
+    }
+  },[MoviesReducer]);
 
   const options = [
     {
@@ -99,6 +115,34 @@ const Movies = () => {
     
   ]
 
+  const upload = async (fileProps,values) => {
+    const log = [];
+    for(let data of fileProps)
+      {
+        const upload = useS3(values[data.name],data.key);
+        const uploading = await upload();
+          uploading.on('httpUploadProgress',(e)=>{
+            let loaded = e.loaded;
+            let total = e.total;
+          let perc = Math.floor((loaded*100)/total);
+          console.log(perc+"%");
+          });
+          try {
+            const file = await uploading.promise();
+            data.success = true;
+            data.s3 = file,
+            log.push(data);
+          }
+          catch(error)
+          {
+            data.success = false;
+            data.error = error,
+            log.push(data);
+          }
+      } 
+      return log;
+  }
+
   const onSubmit = async (values) => {
     const fileProps = [
       {
@@ -110,25 +154,12 @@ const Movies = () => {
         key : "demo/video.mp4"
       }
     ];
-    for(let data of fileProps)
+    const log = await upload(fileProps,values);
+    for (let data of fileProps)
     {
-      const upload = useS3(values[data.name],data.key);
-      const uploading = await upload();
-        uploading.on('httpUploadProgress',(e)=>{
-          let loaded = e.loaded;
-          let total = e.total;
-        let perc = Math.floor((loaded*100)/total);
-        console.log(perc+"%");
-        });
-        try {
-          const file = await uploading.promise();
-          console.log(file);
-        }
-        catch(error)
-        {
-          console.log(error);
-        }
+      values[data.name] = data.key
     }
+    dispatch(create(values))
   }
  
 

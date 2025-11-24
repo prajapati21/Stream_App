@@ -18,7 +18,7 @@ const Movies = () => {
     if(MoviesReducer.success)
     {
       dispatch({
-        types : "CLOSE_DIALOG"
+        type: "CLOSE_DIALOG"
       })
     }
   },[MoviesReducer]);

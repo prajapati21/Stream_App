@@ -9,3 +9,10 @@ direct access ho jayga
 
   npm i aws-sdk --force
 
+  hooks ka ander hamash use.koi name.js
+
+  or hook ka andar async await nhai lagta hai
+
+  const middlewares = applyMiddleware(logger,thunk); in this code using logger and thunk to use better work in see in console after complete the 
+  project and clear the looger and thunk 
+
